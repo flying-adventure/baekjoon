@@ -1,23 +1,19 @@
-#include <stdio.h>
+#include<stdio.h>
 
-int main() {
+int main(void) {
 
-  int n, m;
-  int arr[101] = { 0, };
-  int a, b, c;
+	int bowl[101] = { 0, };
+	int M, N, a, b, c;
 
-  scanf("%d %d", &n, &m);
+	scanf("%d %d", &M, &N);
 
-  for(int i = 0; i < m; i++) {
-    scanf("%d %d %d", &a, &b, &c);
-    for(int k = a; k <= b; k++) {
-      arr[k] = c;
-    }
-  }
-
-  for(int i = 1; i <= n; i++) {
-    printf("%d ", arr[i]);
-  }
-
-  return 0;
+	for (int y = 0; y < N; y++) {
+		scanf("%d %d %d", &a, &b, &c);
+		for (int k=a; k <= b; k++) {
+			bowl[k] = c;
+		}
+	}
+	for (int g = 1 ; g <= M; g++) {
+		printf("%d ", bowl[g]);
+	}
 }
