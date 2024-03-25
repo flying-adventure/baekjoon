@@ -1,89 +1,97 @@
-#include<stdio.h>
+#include <stdio.h>
+#include<stdlib.h>
 #include<string.h>
+#define INF 99999999
 
-int number[100001];
-int cnt = -1;
+typedef struct Node {
+    int data;
+    struct Node* next;
+}Node;
 
+typedef struct Stack {
+    Node* top;
+}Stack;
+//push : pushes an integer onto the stack.
+void push(Stack* stack, int data) {
+    Node* node = (Node*)malloc(sizeof(Node));
 
-//스택이 비어있으면 1, 아니면 0을 출력한다.
-int empty() {
-	if (cnt == -1) {
-		return 1;
-	}
-	else { return 0; }
+    node->data = data;
+    node->next = stack->top;
+    stack->top = node;
+}
+//pop: Subtracts the top integer from the stack and prints the number. If there are no integers on the stack, -1 is printed.
+int pop(Stack* stack) {
+    if (stack->top == NULL) {
+        printf("-1\n");
+        return -INF;
+    }
+    printf("%d\n", stack->top->data);
+    Node* node = stack->top;
+    int data = node->data;
+    stack->top = node->next;
+    free(node);
+    return data;
+}
+//size: Outputs the number of integers on the stack.
+void size(Stack* stack) {
+    Node* now = stack->top;
+    int Size = 0;
+    while (now != NULL) {
+        Size++;
+        now = now->next;
+    }
+    printf("%d\n", Size);
+
+}
+//empty: Print 1 if the stack is empty, or 0 otherwise.
+int empty(Stack* stack) {
+    if (stack->top == NULL) {
+        printf("1\n");
+        return -INF;
+    }
+    else {
+        printf("0\n");
+    }
+
 }
 
-//정수 X를 스택에 넣는 연산이다.
-int push_X(int num) {
-    cnt++;
-	number[cnt] = num;
-}
-
-//스택에서 가장 위에 있는 정수를 빼고, 그 수를 출력한다. 만약 스택에 들어있는 정수가 없는 경우에는 -1을 출력한다.
-int pop() {
-int k=empty();
-if(k==1){printf("-1");}
-else{
-printf("%d",number[cnt]);
-	number[cnt] = 0;
-	cnt--;
-}
+//Top: Print the integer at the top of the stack. If there are no integers on the stack, print -1
+void Top(Stack* stack) {
+    if (stack->top == NULL) {
+        printf("-1\n");
+    }
+    else { printf("%d\n", stack->top->data); }
 
 }
 
-//스택에 들어있는 정수의 개수를 출력한다.
-int size() {
-if(cnt==-1){
-printf("0");}else{
-	printf("%d", cnt+1);
-}
-}
+int main() {
+    Stack s;
+    s.top = NULL;
 
-//스택의 가장 위에 있는 정수를 출력한다. 만약 스택에 들어있는 정수가 없는 경우에는 -1을 출력한다.
-int top() {
-	int k = empty();
-	if (k == 1) { 
-		printf("-1");
-	}
-	else {
-		printf("%d", number[cnt]);
-	}
-	
-}
-int main(void) {
-	int n;
-	char order[10];
-    scanf("%d",&n);
-	for (int k = 0; k < n; k++) {
+    int n;
+    char order[10];
+    scanf("%d", &n);
+    for (int k = 0; k < n; k++) {
+        scanf("%s", order);
+        if (!strcmp(order, "push")) {
+            int num;
+            scanf("%d", &num);
+            push(&s, num);
+        }
+        if (!strcmp(order, "pop")) {
+            pop(&s);
+        }
+        if (!strcmp(order, "size")) {
+            size(&s);
+        }
+        if (!strcmp(order, "empty")) {
+            empty(&s);
+        }
+        if (!strcmp(order, "top")) {
+            Top(&s);
+        }
 
-		scanf("%s", order);
-		if (!strcmp(order,"push")) {
-			int num;
-			scanf("%d", &num);
-			push_X(num);
-		}
-		if (!strcmp(order,"pop")) {
+    }
 
-			pop();
-            printf("\n");
-		}
-		if (!strcmp(order,"size")) {
-
-			size();
-            printf("\n");
-		}
-		if (!strcmp(order,"empty")) {
- 
-			int p=empty();
-            printf("%d\n",p);
-
-		}
-		if (!strcmp(order,"top")) {
-
-			top();
-            printf("\n");
-
-		}
-	}
-
+    return 0;
 }
