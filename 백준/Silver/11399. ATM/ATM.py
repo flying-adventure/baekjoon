@@ -1,9 +1,9 @@
 N=int(input())
-peo=sorted(map(int,input().split()))
+peo=list(map(int,input().split()))
+peo.sort()
 ans=0
-cur=0
-for i in range(N):
-    cur+=peo[i]
-    ans+=cur
-    
+k=0
+for i in peo:
+    k+=i
+    ans+=k
 print(ans)
