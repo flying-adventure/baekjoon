@@ -11,17 +11,15 @@ for _ in range(M):
 
 def bacon(start):
     distance=[-1]*(N+1)
-    queue=deque([start])
     distance[start]=0
-    
+    queue=deque([start])
     while queue:
-        curr=queue.popleft()
-        for neighbor in a[curr]:
-            if distance[neighbor]==-1:
-                distance[neighbor]=distance[curr]+1
-                queue.append(neighbor)
+        me=queue.popleft()
+        for friend in a[me]:
+            if distance[friend]==-1:
+                distance[friend]=distance[me]+1
+                queue.append(friend)
     return sum(d for d in distance if d>0)
-
 result=[]
 for x in range(1,N+1):
     result.append(bacon(x))
