@@ -1,39 +1,28 @@
 def solution(park, routes):
-    # 1. 초기 설정
-    H = len(park)
-    W = len(park[0])
-    
-    # 시작 위치 찾기
-    for i in range(H):
-        for j in range(W):
-            if park[i][j] == 'S':
-                r, c = i, j
-                break
-                
-    # 방향 매핑
-    dirs = {"N": (-1, 0), "S": (1, 0), "W": (0, -1), "E": (0, 1)}
-    
-    # 2. 명령 수행
-    for route in routes:
-        op, n = route.split()
-        n = int(n)
-        dr, dc = dirs[op]
+    N=len(park) #세로
+    M=len(park[0]) #가로
+    dir_dict = {'N': (-1, 0), 'S': (1, 0), 'W': (0, -1), 'E': (0, 1)}
+
+    #시작점 찾기
+    sx,sy=0,0
+    for i in range(N):
+        for j in range(M):
+            if park[i][j]=='S':
+                sx,sy=i,j
         
-        nr, nc = r, c
-        can_move = True
-        
-        # 3. 한 칸씩 이동하며 검증 (n번 반복)
+    for ops in routes:
+        op,n=ops.split()
+        n=int(n)
+        dx,dy=dir_dict[op]
+        nx,ny=sx,sy
+        is_ok=True
         for _ in range(n):
-            nr += dr
-            nc += dc
-            
-            # 공원을 벗어나거나 장애물을 만나는지 체크
-            if not (0 <= nr < H and 0 <= nc < W) or park[nr][nc] == 'X':
-                can_move = False
+            nx+=dx
+            ny+=dy
+            if not(0<=nx<N and 0<=ny<M) or park[nx][ny]=='X':
+                is_ok=False
                 break
+        if is_ok:
+            sx,sy=nx,ny
         
-        # 검증을 통과했을 때만 실제 좌표 업데이트
-        if can_move:
-            r, c = nr, nc
-            
-    return [r, c]
+    return sx,sy  
